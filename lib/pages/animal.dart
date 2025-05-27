@@ -15,9 +15,9 @@ class AnimalMocaTestPage extends StatefulWidget {
 class _AnimalMocaTestPageState extends State<AnimalMocaTestPage> {
   final TextEditingController _controller = TextEditingController();
   final Map<String, String> animalImages = {
-    'assets/lion.png': 'lion',
-    'assets/camel.png': 'camel',
-    'assets/rhino.png': 'rhino',
+    'assets/lion.png': 'สิงโต',
+    'assets/camel.png': 'อูฐ',
+    'assets/rhino.png': 'แรด',
   };
 
   late List<MapEntry<String, String>> shuffledAnimals;
@@ -66,8 +66,8 @@ class _AnimalMocaTestPageState extends State<AnimalMocaTestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Animal MoCA Test'),
-        backgroundColor: Colors.teal,
+        title: const Text('กรอกชื่อสัตว์ให้ถูกต้อง'),
+        backgroundColor: Color.fromARGB(255, 87, 152, 225),
         automaticallyImplyLeading: false,
       ),
       body:
@@ -77,7 +77,7 @@ class _AnimalMocaTestPageState extends State<AnimalMocaTestPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '✅ Quiz Complete!\nYour score: $score / ${shuffledAnimals.length}',
+                      '✅ สำเร็จ!\nคะแนนของคุณ: $score / ${shuffledAnimals.length}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 24),
                     ),
@@ -86,7 +86,7 @@ class _AnimalMocaTestPageState extends State<AnimalMocaTestPage> {
                       onPressed: () {
                         Navigator.pushNamed(context, '/attention');
                       },
-                      child: const Text('Go to Next Test'),
+                      child: const Text('แบบทดสอบถัดไป'),
                     ),
                   ],
                 ),
@@ -119,7 +119,7 @@ class _AnimalMocaTestPageState extends State<AnimalMocaTestPage> {
                     child: TextField(
                       controller: _controller,
                       decoration: const InputDecoration(
-                        labelText: 'What animal is this?',
+                        labelText: 'กรอกชื่อสัตว์ให้ถูกต้อง',
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -128,7 +128,7 @@ class _AnimalMocaTestPageState extends State<AnimalMocaTestPage> {
                     padding: const EdgeInsets.only(bottom: 24.0),
                     child: ElevatedButton(
                       onPressed: _handleSubmit,
-                      child: const Text('Submit'),
+                      child: const Text('ส่งคำตอบ'),
                     ),
                   ),
                 ],

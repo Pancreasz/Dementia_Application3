@@ -181,12 +181,12 @@ class _ClockTestPageState extends State<ClockTestPage> {
       ),
       floatingActionButton: SpeedDial(
         animatedIcon: AnimatedIcons.menu_close,
-        backgroundColor: Colors.blue,
+        backgroundColor: Color.fromARGB(255, 87, 152, 225),
         overlayOpacity: 0.3,
         children: [
           SpeedDialChild(
             child: const Icon(Icons.clear),
-            label: 'Clear Canvas',
+            label: 'ลบทั้งหมด',
             onTap: () {
               setState(() {
                 lines.clear();
@@ -195,7 +195,7 @@ class _ClockTestPageState extends State<ClockTestPage> {
           ),
           SpeedDialChild(
             child: Icon(isErasing ? Icons.brush : Icons.auto_fix_off),
-            label: isErasing ? 'Draw Mode' : 'Eraser Mode',
+            label: isErasing ? 'ปากกา' : 'ยางลบ',
             onTap: () {
               setState(() {
                 isErasing = !isErasing;
@@ -204,7 +204,7 @@ class _ClockTestPageState extends State<ClockTestPage> {
           ),
           SpeedDialChild(
             child: const Icon(Icons.save),
-            label: 'Save as Image',
+            label: 'ส่งคำตอบ',
             onTap: () {
               saveCanvas(context, _repaintBoundaryKey);
               Navigator.pushNamed(context, '/selectimages');

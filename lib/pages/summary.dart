@@ -11,7 +11,7 @@ class EndPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("H O M E"),
+        title: const Text("แบบทดสอบโรคประสาทเสื่อม"),
         automaticallyImplyLeading: false,
       ),
       body: Center(
@@ -19,13 +19,13 @@ class EndPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "larksen Score: $larkScore/1\nClock Score: $clockScore/3 \nAnimal Score: $animalScore/3\nAttention Score: $attentionScore/3\nReorder Images Score: $reorderScore/5\nOverall: $totalScore/15",
+              "คะแนนแบบทดสอบลากเส้น: $larkScore/1\nคะแนนแบบทดสอบนาฬิกา: $clockScore/3 \nคะแนนแบบทดสอบทายชื่อสัตว์: $animalScore/3\nคะแนนแบบทดสอบลบเลข: $attentionScore/3\nคะแนนแบบทดสอบความจำ: $reorderScore/5\nคะแนนรวมทั้งหมด: $totalScore/15",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              child: const Text("Start the Test (NUh UHhh)"),
+              child: const Text("ทำแบบทดสอบอีกครั้ง"),
               onPressed: () {
                 Navigator.pushNamed(context, '/homepage');
               },

@@ -38,7 +38,7 @@ class _AttentionTestPageState extends State<AttentionTestPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          "You got $score / 5 ,You got $attentionScore / 3 for test",
+          "คุณได้คะแนนทั้งหมด $score / 5 ,และคะแนนt $attentionScore / 3 for test",
         ),
       ),
     );
@@ -56,8 +56,8 @@ class _AttentionTestPageState extends State<AttentionTestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("MoCA Attention Test"),
-        backgroundColor: Colors.deepPurple,
+        title: const Text("แบบทดสอบลบเลข"),
+        backgroundColor: Color.fromARGB(255, 87, 152, 225),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -65,7 +65,7 @@ class _AttentionTestPageState extends State<AttentionTestPage> {
         child: Column(
           children: [
             const Text(
-              "Start from 100, subtract 7 each time:",
+              "ให้ทำการลบเลขจาก 100 ครั้งล่ะ 7 เป็นจำนวน 5 ครั้ง แต่ล่ะครั้งให้นำคำตอบใส่ลงในช่องตามลำดับ",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
@@ -90,7 +90,7 @@ class _AttentionTestPageState extends State<AttentionTestPage> {
                 _handleSubmit();
                 Navigator.pushNamed(context, '/reorderimages');
               },
-              child: const Text("Submit"),
+              child: const Text("ส่งคำตอบ"),
             ),
           ],
         ),

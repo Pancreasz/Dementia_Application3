@@ -51,7 +51,7 @@ class _SelectImagesPageState extends State<SelectImagesPage> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'คุณจะได้คะแนนตามจำนวนรูปภาพที่เรียงถูกต้อง!',
+                  'คุณจะได้คะแนนตามจำนวนรูปภาพที่เรียงถูกต้อง! \n ถ้าหากช่องสี่เหลี่ยมไม่ครบกรุณาเอียงจอเป็นแนวนอน',
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
@@ -101,7 +101,7 @@ class _SelectImagesPageState extends State<SelectImagesPage> {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: Text('เลือกรูปภาพ', style: TextStyle(fontSize: 20)),
+          child: Text('ถ้าหากช่องสี่เหลี่ยมไม่ครบ 5 ช่องกรุณาเอียงจอเป็นแนวนอน', style: TextStyle(fontSize: 20)),
         ),
         centerTitle: true,
         automaticallyImplyLeading: false,

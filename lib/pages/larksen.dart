@@ -62,11 +62,12 @@ class _GameScreenState extends State<GameScreen> {
 
   void _generateCheckpoints() {
     final size = MediaQuery.of(context).size;
-    const padding = 100.0;
-    const minDistanceFromEdge = 80.0;
-    const minDistanceBetweenPoints = 90.0;
+    const minDistanceFromEdge = 60.0;  // Reduced from 80
+    const minDistanceBetweenPoints = 70.0;  // Reduced from 90
+    const pointRadius = 20.0;
 
     checkpoints.clear();
+    
     for (int i = 0; i < 10; i++) {
       Offset newPoint;
       bool validPosition = false;
@@ -75,31 +76,45 @@ class _GameScreenState extends State<GameScreen> {
 
       while (!validPosition && attempts < maxAttempts) {
         newPoint = Offset(
-          size.width / 2 +
-              (random.nextDouble() - 0.5) * (size.width - 2 * padding),
-          size.height / 2 +
-              (random.nextDouble() - 0.5) * (size.height - 2 * padding),
+          minDistanceFromEdge + pointRadius + 
+              random.nextDouble() * (size.width - 2 * (minDistanceFromEdge + pointRadius)),
+          minDistanceFromEdge + pointRadius + 
+              random.nextDouble() * (size.height - 2 * (minDistanceFromEdge + pointRadius)),
         );
 
-        if (newPoint.dx < minDistanceFromEdge ||
-            newPoint.dx > size.width - minDistanceFromEdge ||
-            newPoint.dy < minDistanceFromEdge ||
-            newPoint.dy > size.height - minDistanceFromEdge) {
+        validPosition = true;
+        
+        // Check distance from edges
+        if (newPoint.dx < minDistanceFromEdge + pointRadius ||
+            newPoint.dx > size.width - minDistanceFromEdge - pointRadius ||
+            newPoint.dy < minDistanceFromEdge + pointRadius ||
+            newPoint.dy > size.height - minDistanceFromEdge - pointRadius) {
+          validPosition = false;
           attempts++;
           continue;
         }
 
-        validPosition = true;
+        // Check distance from other points
         for (var point in checkpoints) {
           if ((point - newPoint).distance < minDistanceBetweenPoints) {
             validPosition = false;
             break;
           }
         }
+
         if (validPosition) {
           checkpoints.add(newPoint);
         }
         attempts++;
+      }
+      
+      // If we couldn't find a valid position after maxAttempts, just place it somewhere
+      if (!validPosition && attempts >= maxAttempts) {
+        newPoint = Offset(
+          size.width / 2 + (i % 2 == 0 ? -1 : 1) * (minDistanceBetweenPoints * (i~/2 + 1)),
+          size.height / 2 + (i % 3 == 0 ? -1 : 1) * (minDistanceBetweenPoints * (i~/3 + 1)),
+        );
+        checkpoints.add(newPoint);
       }
     }
   }
@@ -275,11 +290,11 @@ class _GameScreenState extends State<GameScreen> {
       context: context,
       builder:
           (context) => AlertDialog(
-            title: Text(passed ? 'สำเร็จ!' : 'ลองอีกครั้ง'),
+            title: Text(passed ? '' : ''),
             content: Text(
               passed
-                  ? 'ทำได้ดี! คุณต่อจุดทั้งหมดถูกต้อง!'
-                  : 'คำตอบไม่ถูกต้อง โปรดตรวจสอบ:\n1. ต่อจุดตามลำดับ\n2. ไม่มีเส้นทับกัน\n3. ไม่ยกนิ้วขณะลากเส้น',
+                  ? 'กด "ตกลง" เพื่อไปแบบทดสอบต่อไป'
+                  : 'กด "ตกลง" เพื่อไปแบบทดสอบต่อไป',
             ),
             actions: [
               TextButton(
@@ -330,7 +345,7 @@ class _GameScreenState extends State<GameScreen> {
                   const SizedBox(height: 12),
                   _buildInstructionRow('2. ห้ามลากเส้นทับกัน'),
                   const SizedBox(height: 12),
-                  _buildInstructionRow('3. ห้ามยกนิ้วขณะลากเส้นระหว่างจุด'),
+                  _buildInstructionRow('3. เมื่อลากเส้นเชื่อมจุดแล้วกรุณายกนิ้วขึ้นแล้วลากเส้นต่อไป'),
                   const SizedBox(height: 20),
                 ],
               ),
@@ -389,10 +404,10 @@ class _GameScreenState extends State<GameScreen> {
       appBar: AppBar(
         title: const Text(
           'ตัวอย่าง 1 -> ก -> 2',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 69, 123, 184),
+        backgroundColor: const Color.fromARGB(255, 87, 152, 225),
         elevation: 10,
         actions: [
           Padding(
@@ -461,7 +476,7 @@ class _GameScreenState extends State<GameScreen> {
               right: 0,
               child: Center(
                 child: Text(
-                  gameResult! ? 'สำเร็จ!' : 'ลองอีกครั้ง',
+                  gameResult! ? '' : '',
                   style: TextStyle(
                     color: gameResult! ? Colors.green : Colors.red,
                     fontSize: 24,

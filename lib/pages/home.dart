@@ -7,12 +7,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("H O M E"),
+        title: const Text("แบบทดสอบโรคประสาทเสื่อม"),
         automaticallyImplyLeading: false,
       ),
       body: Center(
         child: ElevatedButton(
-          child: const Text("Start the Test"),
+          child: const Text("เริ่มทำแบบทดสอบ"),
           onPressed: () {
             Navigator.pushNamed(context, '/larksen');
           },

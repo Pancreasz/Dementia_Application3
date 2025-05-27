@@ -85,7 +85,7 @@ class _ReorderImagesPageState extends State<ReorderImagesPage> {
             actions: [
               Center(
                 child: ElevatedButton(
-                  child: Text('Go to Endpage'),
+                  child: Text('ไปที่หน้าสรุปคะแนน'),
                   onPressed: () {
                     Navigator.pushNamed(context, '/endpage');
                   },
