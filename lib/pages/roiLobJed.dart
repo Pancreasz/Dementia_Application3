@@ -1,0 +1,100 @@
+import 'package:flutter/material.dart';
+import 'score.dart';
+
+class AttentionTestPage extends StatefulWidget {
+  const AttentionTestPage({super.key});
+
+  @override
+  State<AttentionTestPage> createState() => _AttentionTestPageState();
+}
+
+class _AttentionTestPageState extends State<AttentionTestPage> {
+  final List<TextEditingController> _controllers = List.generate(
+    5,
+    (_) => TextEditingController(),
+  );
+
+  final List<int> _correctAnswers = [93, 86, 79, 72, 65];
+
+  void _handleSubmit() {
+    int score = 0;
+    for (int i = 0; i < _controllers.length; i++) {
+      final input = int.tryParse(_controllers[i].text);
+      if (input != null && input == _correctAnswers[i]) {
+        score++;
+      }
+    }
+
+    if (score >= 4) {
+      attentionScore = 3;
+    } else if (score < 4 && score >= 2) {
+      attentionScore = 2;
+    } else if (score == 1) {
+      attentionScore = 1;
+    } else if (score == 0) {
+      attentionScore = 0;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          "You got $score / 5 ,You got $attentionScore / 3 for test",
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("MoCA Attention Test"),
+        backgroundColor: Colors.deepPurple,
+        automaticallyImplyLeading: false,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            const Text(
+              "Start from 100, subtract 7 each time:",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: List.generate(5, (index) {
+                return SizedBox(
+                  width: 60,
+                  child: TextField(
+                    controller: _controllers[index],
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                );
+              }),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {
+                _handleSubmit();
+                Navigator.pushNamed(context, '/reorderimages');
+              },
+              child: const Text("Submit"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
