@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:http/http.dart' as http;
@@ -179,38 +178,90 @@ class _ClockTestPageState extends State<ClockTestPage> {
           ),
         ],
       ),
-      floatingActionButton: SpeedDial(
-        animatedIcon: AnimatedIcons.menu_close,
-        backgroundColor: Color.fromARGB(255, 87, 152, 225),
-        overlayOpacity: 0.3,
-        children: [
-          SpeedDialChild(
-            child: const Icon(Icons.clear),
-            label: 'ลบทั้งหมด',
-            onTap: () {
-              setState(() {
-                lines.clear();
-              });
-            },
-          ),
-          SpeedDialChild(
-            child: Icon(isErasing ? Icons.brush : Icons.auto_fix_off),
-            label: isErasing ? 'ปากกา' : 'ยางลบ',
-            onTap: () {
-              setState(() {
-                isErasing = !isErasing;
-              });
-            },
-          ),
-          SpeedDialChild(
-            child: const Icon(Icons.save),
-            label: 'ส่งคำตอบ',
-            onTap: () {
-              saveCanvas(context, _repaintBoundaryKey);
-              Navigator.pushNamed(context, '/selectimages');
-            },
-          ),
-        ],
+      floatingActionButton: Container(
+        padding: EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'กล่องอุปกรณ์',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 8),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Clear Button
+                Column(
+                  children: [
+                    FloatingActionButton(
+                      heroTag: 'clear',
+                      onPressed: () {
+                        setState(() {
+                          lines.clear();
+                        });
+                      },
+                      child: Icon(Icons.clear),
+                      backgroundColor: Colors.blue,
+                    ),
+                    SizedBox(height: 4),
+                    Text('ลบทั้งกระดาษ'),
+                  ],
+                ),
+                SizedBox(height: 8),
+                // Eraser/Brush Toggle Button
+                Column(
+                  children: [
+                    FloatingActionButton(
+                      heroTag: 'eraser',
+                      onPressed: () {
+                        setState(() {
+                          isErasing = !isErasing;
+                        });
+                      },
+                      child: Icon(isErasing ? Icons.brush : Icons.auto_fix_off),
+                      backgroundColor: Colors.blue,
+                    ),
+                    SizedBox(height: 4),
+                    Text(isErasing ? 'ปากกา' : 'ยางลบ'),
+                  ],
+                ),
+                SizedBox(height: 8),
+                // Save Button
+                Column(
+                  children: [
+                    FloatingActionButton(
+                      heroTag: 'save',
+                      onPressed: () {
+                        saveCanvas(context, _repaintBoundaryKey);
+                        Navigator.pushNamed(context, '/selectimages');
+                      },
+                      child: Icon(Icons.save),
+                      backgroundColor: Colors.blue,
+                    ),
+                    SizedBox(height: 4),
+                    Text('ส่งคำตอบ'),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -244,7 +295,7 @@ class LinePainter extends CustomPainter {
       final linePaint =
           Paint()
             ..color = line.color
-            ..strokeWidth = 10.0
+            ..strokeWidth = 7.0
             ..strokeCap = StrokeCap.round;
       canvas.drawLine(line.start, line.end, linePaint);
     }
